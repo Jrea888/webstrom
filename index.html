@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网上预约挂号系统</title>
+</head>
+<link rel="stylesheet" href="./styles/common.css">
+<link rel="stylesheet" href="./styles/index.css">
+<body>
+<div id="app">
+    <div class="top">
+        <img src="./images/topimg.jpg" alt="">
+    </div>
+    <div class="heng"></div>
+    <div class="nav">
+        <ul>
+            <li><a href="./index.html">系统首页</a></li>
+            <li><a href="./doctorEnquiry.html">医生查询</a></li>
+            <li><a href="./online.html">在线预约</a></li>
+            <li><a href="publicInfo.html">公告信息</a></li>
+            <li><a href="./registered.html">患者注册</a></li>
+        </ul>
+    </div>
+
+    <div class="content clearfix">
+        <div class="left fl">
+            <div class="list">
+                <div class="listTop">
+                    <div class="text">
+                        <span>医院信息</span>
+                    </div>
+                </div>
+                <div class="listBottom Add clearfix">
+                    <ul>
+                        <li>
+                            <div class="bond1">序号</div>
+                            <div class="bond1">名称</div>
+                            <div class="bond1">地址</div>
+                            <div class="bond1">电话</div>
+                        </li>
+                        <li  v-for="(item,index) in dataList" :key="index">
+                            <span>{{item.id}}</span>
+                            <span>{{item.mingcheng}}</span>
+                            <span>{{item.dizhi}}</span>
+                            <span>{{item.dianhua}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="right fr">
+            <div class="login" id="loginInput">
+                <ul>
+                    <li>
+                        账号：<input class="zhHao" v-on:blur="checkUser" v-model="userLoginName"  type="text" placeholder="请输入用户名">
+                    </li>
+                    <p>{{errorLoginUser}}</p>
+                    <li>
+                        密码：<input class="zhHao" v-on:blur="checkPass" v-model="passLoginWord" type="password" placeholder="请输入密码">
+                    </li>
+                    <p>{{errorLoginPass}}</p>
+                    <li>
+                        <input class="btn" type="button" @click="checkLogin" value="登录">
+                        <input class="btn" type="button" @click="Register" value="注册">
+                    </li>
+                </ul>
+            </div>
+            <div class="userInfo" id="username">
+                <ul>
+                    <li>
+                        <span>欢迎您：</span>
+                        <span id="realUser">admin</span>
+                    </li>
+                    <li>
+                        <a href="">注销退出</a>
+                    </li>
+                    <li>
+                        <a href="">管理中心</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="font">
+        <p>联系方式&nbsp;电话：18142422763&nbsp;&nbsp;&nbsp;</p>
+        <p>地址：陕西省咸阳市XXXXXX厦A区305号</p>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="./script/vue.js"></script>
+<script type="text/javascript" src="./script/jquery.js"></script>
+<script type="text/javascript" src="script/toolJs.js"></script>
+<script type="text/javascript" src="script/axios.min.js"></script>
+<script type="text/javascript" src="script/constants.js"></script>
+<script type="text/javascript" src="script/httpRequest.js"></script>
+<script type="text/javascript">
+    //登录成功 显示真实用户
+    $(function () {
+        show()
+    });
+    document.getElementById("realUser").innerHTML = show();
+
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    dataList:[],
+                    //用户登录信息
+                    userLoginName: '',
+                    passLoginWord: '',
+                    errorLoginUser:'',
+                    errorLoginPass:''
+                };
+            },
+            methods: {
+                //医院信息
+                async getData() {
+                    let {data:result} = await http.get({
+                        url: getUrl() + '/out/api/hospitalList'
+                    });
+                    this.dataList = result.data;
+                },
+                //用户登录校验
+                checkUser(){
+                    if (this.userLoginName){
+                        this.errorLoginUser = ""
+                    }else{
+                        this.errorLoginUser= "账号不能为空";
+                    }
+                },
+                checkPass(){
+                    if (this.passLoginWord && this.passLoginWord.length === 6){
+                        this.errorLoginPass = ""
+                    }else{
+                        this.errorLoginPass= "密码不能为空 长度必须为六位";
+                    }
+                },
+                //用户登录部分
+                checkLogin() {
+                    if (this.userLoginName && this.passLoginWord) {
+                        var loginData = {
+                            userName: this.userLoginName,
+                            password: this.passLoginWord
+                        };
+                        $.ajax({
+                            type: "POST",
+                            url: getUrl() + "/sys/login",
+                            data: loginData,
+                            dataType: "json",
+                            success: function (result) {
+                                if (result.code == 0) {//登录成功
+                                    localStorage.setItem("token", result.token);
+                                    localStorage.setItem("userLoginName", this.userLoginName);
+                                    parent.location.href = '/hospital/index.html';
+                                }
+                                if (result.code == 500) {
+                                    alert(result.msg)
+                                }
+                            },
+                            error: function () {
+                                alert("请求失败")
+                            }
+                        });
+                    } else {
+                        alert("用户和密码不能为空")
+                    }
+                },
+                //注册
+                Register() {
+                    parent.location.href = '/hospital/registered.html';
+                },
+            },
+            mounted() {
+                this.getData();
+            }
+        });
+</script>
+
+</body>
+</html>

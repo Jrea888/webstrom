@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网上预约挂号系统</title>
+</head>
+<link rel="stylesheet" href="./styles/common.css">
+<link rel="stylesheet" href="./styles/index.css">
+<body>
+<div class="top">
+    <img src="./images/topimg.jpg" alt="">
+</div>
+<div class="heng"></div>
+<div class="nav">
+    <ul>
+        <li><a href="./index.html">系统首页</a></li>
+        <li><a href="./doctorEnquiry.html">医生查询</a></li>
+        <li><a href="./online.html">在线预约</a></li>
+        <li><a href="publicInfo.html">公告信息</a></li>
+        <li><a href="./registered.html">患者注册</a></li>
+    </ul>
+</div>
+
+<div id="enquiry">
+    <div class="content clearfix">
+        <div class="left fl">
+            <div class="list">
+                <div class="listTop">
+                    <div class="text">
+                        <span>医生信息</span>
+                    </div>
+                    <div class="enquiry">
+                        <input class="doctor" type="text" v-model="doctorName" placeholder="请输入医生姓名"/>
+                        <input class="doctor" type="text" v-model="doctorHospital" placeholder="请输入医生所属医院"/>
+                        <input class="btn1" type="button" @click="doctorSearch" value="搜索">
+                        <input class="btn1" type="button" @click="doctorCancel" value="取消">
+                    </div>
+                </div>
+                <div class="hostinfor clearfix" id="doctorInform">
+                    <div class="img fl">
+                        <p>专家信息</p>
+                        <img src="./images/man.jpg" alt="">
+                    </div>
+                    <div class="Inform fr">
+                        <p>个人信息</p>
+                        <ul>
+                            <li>
+                    <span>
+                    姓名：王晓光
+                    </span>
+                            </li>
+                            <li>
+                    <span>
+                    性別：男
+                    </span>
+                            </li>
+                            <li>
+                    <span>
+                    年齡：40
+                    </span>
+                            </li>
+                            <li>
+                    <span>
+                    擅长：各类心脑血管各疾病
+                    </span>
+                            </li>
+                            <li>
+                    <span>
+                    类型：专家门诊
+                    </span>
+                            </li>
+                            <li>
+                                <span>
+                                医院：北大第一人民医院
+                                </span>
+                            </li>
+                            <li>
+                                    <span>
+                                    科室：内科
+                                    </span>
+                            </li>
+                            <input class="btn" type="button" value="预约" style="margin-top: 5%;">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="right fr">
+                <div class="login" id="loginInput">
+                    <ul>
+                        <li>
+                            账号：<input class="zhHao" v-on:blur="checkUser" v-model="userLoginName"  type="text" placeholder="请输入用户名">
+                        </li>
+                        <p>{{errorLoginUser}}</p>
+                        <li>
+                            密码：<input class="zhHao" v-on:blur="checkPass" v-model="passLoginWord" type="password" placeholder="请输入密码">
+                        </li>
+                        <p>{{errorLoginPass}}</p>
+                        <li>
+                            <input class="btn" type="button" @click="checkLogin" value="登录">
+                            <input class="btn" type="button" @click="Register" value="注册">
+                        </li>
+                    </ul>
+                </div>
+                <div class="userInfo" id="username">
+                    <ul>
+                        <li>
+                            <span>欢迎您：</span>
+                            <span id="realUser">admin</span>
+                        </li>
+                        <li>
+                            <a href="">注销退出</a>
+                        </li>
+                        <li>
+                            <a href="">管理中心</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="font">
+            <p>联系方式&nbsp;电话：18142422763&nbsp;&nbsp;&nbsp;</p>
+            <p>地址：陕西省咸阳市XXXXXX厦A区305号</p>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="./script/vue.js"></script>
+    <script type="text/javascript" src="./script/jquery.js"></script>
+    <script type="text/javascript" src="script/toolJs.js"></script>
+    <script type="text/javascript" src="script/axios.min.js"></script>
+    <script type="text/javascript" src="script/constants.js"></script>
+    <script type="text/javascript" src="script/httpRequest.js"></script>
+    <script type="text/javascript">
+        //登录成功 显示真实用户
+        $(function () {
+            show()
+        });
+        document.getElementById("realUser").innerHTML = show();
+
+        new Vue({
+            el: '#enquiry',
+            data() {
+                return {
+                    //用户登录信息
+                    userLoginName: '',
+                    passLoginWord: '',
+                    errorLoginUser:'',
+                    errorLoginPass:'',
+                    doctorName: '',
+                    doctorHospital: '',
+                    doctorList: []
+                }
+            },
+            methods: {
+                //获取医生信息
+                async getDoctorData() {
+                    let {data: result} = await http.get({
+                        url: getUrl() + '/out/api/doctorList'
+                    });
+                    this.doctorList = result.data;
+                },
+                //医生信息查询
+                doctorSearch() {
+                    if (this.doctorName && this.doctorHospital) {
+                        var enquiryData = {
+                            username: this.userName,
+                            password: this.userPass
+                        };
+                        $.ajax({
+                            type: "POST",
+                            url: getUrl() + "/sys/login",
+                            data: enquiryData,
+                            dataType: "json",
+                            success: function (result) {
+                                if (result.code == 0) {
+                                    localStorage.setItem("token", result.token);
+                                    localStorage.setItem("username", this.userName);
+                                    parent.location.href = '/hospital/online.html';
+                                }
+                                if (result.code == 500) {
+                                    alert(result.msg)
+                                }
+                            },
+                            error: function () {
+                                alert("请求失败")
+                            }
+                        });
+                    } else {
+                        alert("请输入医生姓名和所属医院！")
+                    }
+                },
+                //输入重置
+                doctorCancel() {
+                    this.doctorName = "";
+                    this.doctorHospital = "";
+                },
+                //用户登录校验
+                checkUser(){
+                    if (this.userLoginName){
+                        this.errorLoginUser = ""
+                    }else{
+                        this.errorLoginUser= "账号不能为空";
+                    }
+                },
+                checkPass(){
+                    if (this.passLoginWord && this.passLoginWord.length === 6){
+                        this.errorLoginPass = ""
+                    }else{
+                        this.errorLoginPass= "密码不能为空 长度必须为六位";
+                    }
+                },
+                //用户登录部分
+                checkLogin() {
+                    if (this.userLoginName && this.passLoginWord) {
+                        var loginData = {
+                            userName: this.userLoginName,
+                            password: this.passLoginWord
+                        };
+                        $.ajax({
+                            type: "POST",
+                            url: getUrl() + "/sys/login",
+                            data: loginData,
+                            dataType: "json",
+                            success: function (result) {
+                                if (result.code == 0) {//登录成功
+                                    localStorage.setItem("token", result.token);
+                                    localStorage.setItem("userLoginName", this.userLoginName);
+                                    parent.location.href = '/hospital/index.html';
+                                }
+                                if (result.code == 500) {
+                                    alert(result.msg)
+                                }
+                            },
+                            error: function () {
+                                alert("请求失败")
+                            }
+                        });
+                    } else {
+                        alert("用户和密码不能为空")
+                    }
+                },
+                //注册
+                Register() {
+                    parent.location.href = '/hospital/registered.html';
+                },
+            },
+            mounted() {
+                this.getDoctorData();
+            }
+        })
+    </script>
+
+</body>
+</html>

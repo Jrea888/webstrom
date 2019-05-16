@@ -1,0 +1,473 @@
+.fr {
+    float: right;
+}
+
+.fl {
+    float: left;
+}
+
+.top {
+    width: 100%;
+}
+
+.top img {
+    width: 100%;
+}
+
+.heng {
+    width: 100%;
+    height: 5px;
+}
+
+.nav {
+    width: 100%;
+    height: 52px;
+    line-height: 50px;
+    background: #5E7AB9;
+}
+
+.nav ul li {
+    float: left;
+    width: 20%;
+}
+
+.nav ul li a {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.nav ul li:hover {
+    color: #ffffff;
+    background: #983A25;
+}
+
+/*内容*/
+.content {
+    width: 100%;
+    height: auto;
+}
+
+.content .left {
+    width: 70%;
+    height: auto;
+}
+
+.publicContent {
+    width: 100%;
+}
+
+.content .publicContent {
+    margin: 0 auto;
+}
+
+.PCT {
+    width: 70%;
+}
+#PCT{
+    height: auto;
+    text-align: center;
+    padding: 3% 4%;
+}
+.context{
+    text-align: justify;
+    text-indent:30px;
+    margin-top: 3%;
+}
+.context p{
+    font-size: 16px;
+}
+.content .right {
+    width: 30%;
+    height: 400px;
+}
+
+/*左边信息*/
+.list {
+    width: 96%;
+    margin: 0 auto;
+    height: auto;
+    background: #ffffff;
+}
+
+.listTop {
+    width: 90%;
+    margin: 0 auto;
+    padding: 2% 0 1% 0;
+}
+
+.text {
+    text-align: left;
+    margin-top: 3%;
+    border-bottom: 5px solid #3F55A0;
+    padding-bottom: 1%;
+}
+
+.text span {
+    font-size: 28px;
+    color: #000;
+}
+
+.listBottom {
+    width: 90%;
+    margin: 0 auto;
+    height: auto;
+    box-shadow: 0 0 3px #999;
+}
+
+.listBottom tr {
+    height: 40px;
+}
+
+.bond {
+    font-weight: bold;
+    background: #FAFAF1;
+}
+
+.bond1 {
+    font-weight: bold;
+    background: #FAFAF1;
+    width: 25%;
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+}
+
+.listBottom ul li {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #3F55A0;
+}
+
+.listBottom ul li:hover {
+    background: #F2F2F2;
+}
+
+.listBottom ul li span {
+    font-size: 16px;
+    height: 40px;
+    line-height: 40px;
+    display: inline-block;
+    width: 25%;
+    float: left;
+}
+
+.listBottom tr td {
+    border: 1px solid #CCC;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.listBottom tr td span {
+    color: red;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.listBottom tr td a {
+    color: #9A3A24;
+}
+
+/*右边登录*/
+.login {
+    width: 90%;
+    margin: 30px auto;
+    padding: 10% 0;
+    box-shadow: 0 0 3px #999;
+}
+
+.login ul li {
+    height: 50px;
+    line-height: 50px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.login ul p {
+    color: red;
+    font-size: 12px;
+
+}
+
+.login ul li .zhHao {
+    background: none;
+    border: 1px solid #B9B9B9;
+    outline: none;
+    color: #333;
+    font-size: 14px;
+    border-radius: 3px;
+    height: 30px;
+    width: 45%;
+    padding-left: 5%;
+}
+
+.btn {
+    height: 30px;
+    width: 15%;
+    outline: none;
+    color: #ffffff;
+    font-size: 14px;
+    border-radius: 3px;
+    margin: 0 15px;
+    cursor: pointer;
+    border: none;
+    background: #5E7AB9;
+}
+
+/*在线预约*/
+.userInfo {
+    width: 100%;
+}
+
+.userInfo ul li {
+    width: 75%;
+    margin: 3% 0;
+    text-align: right;
+}
+
+.userInfo ul li {
+    font-size: 16px;
+}
+
+.userInfo ul li a {
+    color: #9A3A24;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.xianBottom {
+    width: 90%;
+    margin: 0 auto;
+    height: auto;
+    padding-bottom: 3%;
+}
+
+.xianBottom ul li {
+    width: 90%;
+    text-align: center;
+    margin: 1% 0 0 0;
+    display: block;
+    font-size: 16px;
+}
+
+.xianBottom ul span {
+    color: red;
+    font-size: 12px;
+    margin: 2% 0 0 0;
+}
+
+.xianBottom .put {
+    height: 30px;
+    width: 24%;
+    padding-left: 2%;
+}
+
+#txtBeginDate {
+    width: 190px;
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+}
+
+/*患者注册*/
+.leftHuan {
+    width: 70%;
+    height: 500px;
+}
+
+.listHuan {
+    width: 96%;
+    margin: 0 auto;
+    height: 500px;
+    background: #ffffff;
+}
+
+.haun {
+    width: 50%;
+    height: 25px;
+    padding-left: 2%;
+}
+
+.patient {
+    height: 30px;
+    width: 15%;
+    outline: none;
+    color: #ffffff;
+    font-size: 14px;
+    border-radius: 3px;
+    margin: 0 15px;
+    cursor: pointer;
+    border: none;
+    background: #5E7AB9;
+}
+
+/*医生查询*/
+.img {
+    padding: 1% 2%;
+    border: 1px dotted #333;
+}
+
+.img p {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 3%;
+}
+
+.Inform {
+    width: 67%;
+    height: auto;
+    margin-right: 3%;
+    border: 1px dotted #333;
+    text-align: left;
+    padding: 2% 3%;
+}
+
+.Inform ul li {
+    border-bottom: 1px dotted #333;
+    font-size: 16px;
+    line-height: 40px;
+}
+
+.Inform p {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.hostinfor {
+    width: 86%;
+    margin: 0 auto;
+    height: 350px;
+    box-shadow: 0 0 3px #999;
+    padding: 2%;
+    overflow: scroll;
+}
+
+.hostinfor tr {
+    height: 40px;
+}
+
+.hostinfor tr td {
+    border: 1px solid #CCC;
+    text-align: center;
+    font-size: 16px;
+}
+
+.enquiry {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    padding: 2% 0 0 0;
+}
+
+.enquiry .doctor {
+    background: none;
+    border: 1px solid #B9B9B9;
+    outline: none;
+    color: #333;
+    font-size: 14px;
+    border-radius: 3px;
+    height: 30px;
+    width: 20%;
+    padding-left: 2%;
+}
+
+.btn1 {
+    height: 30px;
+    width: 10%;
+    outline: none;
+    color: #ffffff;
+    font-size: 14px;
+    border-radius: 3px;
+    margin: 0 5px;
+    cursor: pointer;
+    border: none;
+    background: #5E7AB9;
+}
+
+/*add*/
+.Add {
+    width: 90%;
+    margin: 0 auto;
+    height: 350px;
+    box-shadow: 0 0 3px #999;
+    overflow: scroll;
+}
+
+.dd {
+    width: 90%;
+    margin: 0 auto;
+    height: 300px;
+    box-shadow: 0 0 3px #999;
+}
+
+/*公告信息*/
+.height {
+    height:300px;
+    padding-top: 3%;
+    overflow: scroll;
+}
+
+.dd ul li {
+    width: 90%;
+    margin: 0 auto;
+    height: auto;
+    line-height: 50px;
+    text-align: left;
+    padding-left: 10%;
+    border-bottom: 1px dotted #26559D;
+    cursor: pointer;
+}
+
+.dd ul li img {
+    width: 15px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.dd ul li span {
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+/*脚部*/
+.font {
+    width: 100%;
+    height: auto;
+    line-height: 30px;
+    background: #333A8B;
+    padding: 2% 0;
+}
+
+.font p {
+    text-align: center;
+    color: #ffffff;
+    font-size: 16px;
+}
+/*留言*/
+.doctLang{
+    padding: 3%;
+}
+.doctLang span{
+    display: inline-block;
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    color: #333;
+    margin: 2% 0;
+}
+.liuYan{
+    width: 94%;
+    height: auto;
+    padding: 3%;
+    background: #918f8f;
+}
+.liuYan p{
+    font-size: 16px;
+    color: #ffffff ;
+    text-align: left;
+    line-height: 2;
+    text-indent: 30px;
+}

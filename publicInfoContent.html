@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网上预约挂号系统</title>
+</head>
+<link rel="stylesheet" href="./styles/common.css">
+<link rel="stylesheet" href="./styles/index.css">
+<body>
+<div id="public">
+    <div class="top">
+        <img src="./images/topimg.jpg" alt="">
+    </div>
+    <div class="heng"></div>
+    <div class="nav">
+        <ul>
+            <li><a href="./index.html">系统首页</a></li>
+            <li><a href="./doctorEnquiry.html">医生查询</a></li>
+            <li><a href="./online.html">在线预约</a></li>
+            <li><a href="./publicInfo.html">公告信息</a></li>
+            <li><a href="./registered.html">患者注册</a></li>
+        </ul>
+    </div>
+
+    <div class="content clearfix">
+        <div class="left publicContent">
+            <div class="list PCT">
+                <div class="listTop">
+                    <div class="text">
+                        <span>公告信息</span>
+                    </div>
+                </div>
+                <div class="dd height clearfix" id="PCT">
+                    <h2>{{publicTitle}}</h2>
+                    <div class="context">
+                        <p>{{publicConTent}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="font">
+        <p>联系方式&nbsp;电话：18142422763&nbsp;&nbsp;&nbsp;</p>
+        <p>地址：陕西省咸阳市XXXXXX厦A区305号</p>
+    </div>
+</div>
+
+<script type="text/javascript" src="./script/vue.js"></script>
+<script type="text/javascript" src="./script/jquery.js"></script>
+<script type="text/javascript" src="script/axios.min.js"></script>
+<script type="text/javascript" src="script/constants.js"></script>
+<script type="text/javascript" src="script/httpRequest.js"></script>
+<script type="text/javascript">
+
+    new Vue({
+        el: '#public',
+        data() {
+            return {
+                publicTitle:[],
+                publicConTent:[],
+            }
+        },
+        methods: {
+            //获取标题信息
+            getTitleData(){
+
+            },
+            //获取通知公告内容
+            getContentData(){
+
+            },
+
+            async getPublicContent() {
+                let {data:result} = await http.post({
+                    url:'http://39.106.80.203/out/api/indexNotice'
+                });
+
+                console.log(result,"------result");
+                var jsonObject = JSON.parse(localStorage.getItem("contentId"));
+                console.log(jsonObject,"------jsonObject");
+                console.log(jsonObject.length,"------length");
+
+                for (var i=0; i<=jsonObject.length;i++){
+                        if (result.dataList[i].id===jsonObject[i].id){
+                            this.publicTitle = result.dataList[i].biaoti;
+                            this.publicConTent = result.dataList[i].neirong;
+                        }
+                }
+            },
+        },
+        mounted() {
+            this.getPublicContent();
+        }
+    })
+</script>
+
+</body>
+</html>

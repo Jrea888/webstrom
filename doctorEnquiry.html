@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网上预约挂号系统</title>
+</head>
+<link rel="stylesheet" href="./styles/common.css">
+<link rel="stylesheet" href="./styles/index.css">
+<body>
+<div class="top">
+    <img src="./images/topimg.jpg" alt="">
+</div>
+<div class="heng"></div>
+<div class="nav">
+    <ul>
+        <li><a href="./index.html">系统首页</a></li>
+        <li><a href="./doctorEnquiry.html">医生查询</a></li>
+        <li><a href="./online.html">在线预约</a></li>
+        <li><a href="publicInfo.html">公告信息</a></li>
+        <li><a href="./registered.html">患者注册</a></li>
+    </ul>
+</div>
+
+<div id="enquiry">
+    <div class="content clearfix">
+        <div class="left fl">
+            <div class="list">
+                <div class="listTop">
+                    <div class="text">
+                        <span>医生信息</span>
+                    </div>
+                    <div class="enquiry">
+                        <input class="doctor" type="text" v-model="doctorID" placeholder="请输入医院ID"/>
+                        <input class="doctor" type="text" v-model="doctorName" placeholder="请输入医生姓名"/>
+                        <input class="btn1" type="button" @click="doctorSearch" value="搜索">
+                        <input class="btn1" type="button" @click="doctorCancel" value="取消">
+                    </div>
+                </div>
+                <div class="hostinfor clearfix">
+                    <table class="rightPartContent" width="100%" cellpadding="0" cellspacing="0" border="0"
+                           align="center">
+                        <thead>
+                        <tr>
+                            <td class="bond">医院ID</td>
+                            <td class="bond">医生姓名</td>
+                            <td class="bond">所属医院</td>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr v-for="(item,index) in doctorList" :key="index">
+                                <td>{{item.id}}</td>
+                                <td>
+                                    <a href="">{{item.xingming}}</a>
+                                </td>
+                                <td>{{item.shanchang}}</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+                <div class="doctLang">
+                    <span>医生留言</span>
+                    <div class="liuYan">
+                        <p>{{leaveMessage}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right fr">
+            <div class="login" id="loginInput">
+                <ul>
+                    <li>
+                        账号：<input class="zhHao" v-on:blur="checkUser" v-model="userLoginName"  type="text" placeholder="请输入用户名">
+                    </li>
+                    <p>{{errorLoginUser}}</p>
+                    <li>
+                        密码：<input class="zhHao" v-on:blur="checkPass" v-model="passLoginWord" type="password" placeholder="请输入密码">
+                    </li>
+                    <p>{{errorLoginPass}}</p>
+                    <li>
+                        <input class="btn" type="button" @click="checkLogin" value="登录">
+                        <input class="btn" type="button" @click="Register" value="注册">
+                    </li>
+                </ul>
+            </div>
+            <div class="userInfo" id="username">
+                <ul>
+                    <li>
+                        <span>欢迎您：</span>
+                        <span id="realUser">admin</span>
+                    </li>
+                    <li>
+                        <a href="">注销退出</a>
+                    </li>
+                    <li>
+                        <a href="">管理中心</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="font">
+        <p>联系方式&nbsp;电话：18142422763&nbsp;&nbsp;&nbsp;</p>
+        <p>地址：陕西省咸阳市XXXXXX厦A区305号</p>
+    </div>
+</div>
+
+<script type="text/javascript" src="./script/vue.js"></script>
+<script type="text/javascript" src="./script/jquery.js"></script>
+<script type="text/javascript" src="script/toolJs.js"></script>
+<script type="text/javascript" src="script/axios.min.js"></script>
+<script type="text/javascript" src="script/constants.js"></script>
+<script type="text/javascript" src="script/httpRequest.js"></script>
+<script type="text/javascript">
+    //登录成功 显示真实用户
+    $(function () {
+        show()
+    });
+    document.getElementById("realUser").innerHTML = show();
+
+    new Vue({
+        el: '#enquiry',
+        data() {
+            return {
+                //用户登录信息
+                userLoginName: '',
+                passLoginWord: '',
+                errorLoginUser:'',
+                errorLoginPass:'',
+                leaveMessage:'',
+                //医生姓名
+                doctorName: '',
+                doctorID: '',
+                doctorList:[]
+            }
+        },
+        methods: {
+            //获取医生信息
+            async getDoctorData() {
+                let {data:result} = await http.get({
+                    url: getUrl() + '/out/api/doctorList'
+                });
+                console.log(result,"------result");
+                this.doctorList = result.dataList;
+                console.log(this.doctorList,"------doctorList");
+                console.log("-----------------------------------------------------------------");
+
+                let {data:leaveMsg} = await http.get({
+                    url: getUrl() + '/out/api/myMessage'
+                });
+                console.log(leaveMsg,"----------leaveMsg")
+
+            },
+            //医生信息查询
+            doctorSearch() {
+                if (this.doctorName && this.doctorID) {
+                    var enquiryData = {
+                        hospitalId: this.doctorID,
+                        doctorName: this.doctorName
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: getUrl() + "/out/api/doctorInfo",
+                        data: enquiryData,
+                        dataType: "json",
+                        success: function (result) {
+                            if (result.code == 0) {
+                                console.log(result,"----result")
+                                //查询到 储存到localStroge，跳转到医生信息有显示
+                            }
+                            if (result.code == 500) {
+                                alert(result.msg)
+                            }
+                        },
+                        error: function () {
+                            alert("请求失败")
+                        }
+                    });
+                } else {
+                    alert("请输入医生姓名和所属医院！")
+                }
+            },
+            //输入重置
+            doctorCancel() {
+                this.doctorName = "";
+                this.doctorID = "";
+            },
+            //用户登录校验
+            checkUser(){
+                if (this.userLoginName){
+                    this.errorLoginUser = ""
+                }else{
+                    this.errorLoginUser= "账号不能为空";
+                }
+            },
+            checkPass(){
+                if (this.passLoginWord && this.passLoginWord.length === 6){
+                    this.errorLoginPass = ""
+                }else{
+                    this.errorLoginPass= "密码不能为空 长度必须为六位";
+                }
+            },
+            //用户登录部分
+            checkLogin() {
+                if (this.userLoginName && this.passLoginWord) {
+                    var loginData = {
+                        userName: this.userLoginName,
+                        password: this.passLoginWord
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: getUrl() + "/sys/login",
+                        data: loginData,
+                        dataType: "json",
+                        success: function (result) {
+                            if (result.code == 0) {//登录成功
+                                localStorage.setItem("token", result.token);
+                                localStorage.setItem("userLoginName", this.userLoginName);
+                                parent.location.href = '/hospital/index.html';
+                            }
+                            if (result.code == 500) {
+                                alert(result.msg)
+                            }
+                        },
+                        error: function () {
+                            alert("请求失败")
+                        }
+                    });
+                } else {
+                    alert("用户和密码不能为空")
+                }
+            },
+            //注册
+            Register() {
+                parent.location.href = '/hospital/registered.html';
+            },
+        },
+        mounted(){
+            this.getDoctorData();
+        }
+    })
+</script>
+
+</body>
+</html>
