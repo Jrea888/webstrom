@@ -31,6 +31,7 @@
     width: 20%;
 }
 
+
 .nav ul li a {
     color: #ffffff;
     font-size: 18px;
@@ -82,30 +83,53 @@
     height: 400px;
 }
 
+
 /*左边信息*/
 .list {
     width: 96%;
     margin: 0 auto;
     height: auto;
     background: #ffffff;
+    padding: 2% 0;
 }
 
 .listTop {
     width: 90%;
     margin: 0 auto;
-    padding: 2% 0 1% 0;
+    padding: 1% 0 1% 0;
 }
 
 .text {
     text-align: left;
-    margin-top: 3%;
     border-bottom: 5px solid #3F55A0;
     padding-bottom: 1%;
+    position: relative;
 }
 
+.text img{
+    width: 5%;
+    vertical-align: middle;
+}
+.text a {
+    font-size: 18px;
+    position: absolute;
+    right: 3%;
+    top: 30%;
+}
+.addImg{
+    text-align: right;
+    width: 50%;
+    float: left;
+}
+.addImg img {
+    width: 70%;
+    border: 1px solid #d3c9c9;
+    padding: 2%;
+}
 .text span {
-    font-size: 28px;
+    font-size: 20px;
     color: #000;
+    vertical-align: middle;
 }
 
 .listBottom {
@@ -133,11 +157,20 @@
     line-height: 40px;
     font-size: 16px;
 }
+.bond2{
+    font-weight: bold;
+    background: #FAFAF1;
+    width: 20%;
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+}
 
 .listBottom ul li {
     height: 40px;
     line-height: 40px;
-    border-bottom: 1px solid #3F55A0;
+    border-bottom:1px solid #e3e5ed;
 }
 
 .listBottom ul li:hover {
@@ -152,6 +185,10 @@
     width: 25%;
     float: left;
 }
+.doctorAppoint ul li span{
+    width: 20%;
+}
+
 
 .listBottom tr td {
     border: 1px solid #CCC;
@@ -173,9 +210,10 @@
 /*右边登录*/
 .login {
     width: 90%;
-    margin: 30px auto;
-    padding: 10% 0;
+    margin: 60px auto;
+    padding: 22% 0;
     box-shadow: 0 0 3px #999;
+    background: white;
 }
 
 .login ul li {
@@ -183,11 +221,13 @@
     line-height: 50px;
     font-size: 14px;
     font-weight: bold;
+    text-align: center;
 }
 
 .login ul p {
     color: red;
     font-size: 12px;
+    text-align: center;
 
 }
 
@@ -218,38 +258,51 @@
 
 /*在线预约*/
 .userInfo {
-    width: 100%;
+    width: 90%;
+    margin: 30px auto;
+    box-shadow: 0 0 3px #999;
+    position: relative;
 }
-
+.userInfo img {
+    width: 20%;
+    position: absolute;
+}
 .userInfo ul li {
-    width: 75%;
-    margin: 3% 0;
+    width: 90%;
+    font-size: 20px;
     text-align: right;
 }
-
-.userInfo ul li {
-    font-size: 16px;
-}
-
-.userInfo ul li a {
-    color: #9A3A24;
-    font-size: 16px;
+.userInfo ul li span{
     font-weight: bold;
 }
 
+.userInfo ul li button {
+    border: none;
+    background: none;
+    color: #9A3A24;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .xianBottom {
-    width: 90%;
+    width: 50%;
     margin: 0 auto;
     height: auto;
     padding-bottom: 3%;
+    float: right;
 }
 
 .xianBottom ul li {
     width: 90%;
     text-align: center;
-    margin: 1% 0 0 0;
+    margin: 5% 0 0 0;
     display: block;
     font-size: 16px;
+}
+.xianBottom ul li  select {
+    height: 35px;
+    width: 46%;
 }
 
 .xianBottom ul span {
@@ -260,7 +313,7 @@
 
 .xianBottom .put {
     height: 30px;
-    width: 24%;
+    width: 43%;
     padding-left: 2%;
 }
 
@@ -306,6 +359,7 @@
 .img {
     padding: 1% 2%;
     border: 1px dotted #333;
+    width: 19% ;
 }
 
 .img p {
@@ -328,6 +382,9 @@
     font-size: 16px;
     line-height: 40px;
 }
+.Inform ul li span{
+    display: block;
+}
 
 .Inform p {
     font-weight: bold;
@@ -337,10 +394,10 @@
 .hostinfor {
     width: 86%;
     margin: 0 auto;
-    height: 350px;
+    height: 400px;
     box-shadow: 0 0 3px #999;
     padding: 2%;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .hostinfor tr {
@@ -390,9 +447,9 @@
 .Add {
     width: 90%;
     margin: 0 auto;
-    height: 350px;
+    height: 500px;
     box-shadow: 0 0 3px #999;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .dd {
@@ -404,11 +461,22 @@
 
 /*公告信息*/
 .height {
-    height:300px;
+    height:500px;
     padding-top: 3%;
-    overflow: scroll;
+    overflow-y: scroll;
 }
-
+.publicContent {
+    text-align: left;
+    text-indent: 30px;
+    padding: 0 4% 2%;
+    width: 90%;
+}
+.publicContent p{
+    font-size: 16px;
+    padding: 0 4% 2%;
+    margin-bottom: 3%;
+    border-bottom: 1px solid #333;
+}
 .dd ul li {
     width: 90%;
     margin: 0 auto;
@@ -470,4 +538,55 @@
     text-align: left;
     line-height: 2;
     text-indent: 30px;
+}
+
+/*医生查询*/
+.layui-input-inline{
+    font-size: 16px;
+}
+#doctorData{
+    width: 125px;
+    height: 30px;
+}
+
+/*我要预约*/
+.myOn {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 2%;
+}
+.myOn a img {
+    width: 30%;
+    border: 1px solid #d3c9c9;
+    padding: 2%;
+}
+
+/*患者的预约信息*/
+.listed ul li{
+    width: 96%;
+}
+.MyAppoint {
+    width: 90%;
+    margin: 0 auto;
+    padding: 2% 0 1% 0;
+    overflow: scroll;
+    height: 500px;
+    box-shadow: 0 0 3px #999;
+}
+.MyAppoint ul li{
+    float: left;
+    font-size: 16px;
+    text-align: left;
+    padding: 2%;
+    box-shadow: 0 0 3px #999;
+    margin: 1%;
+    width: 90%;
+    margin-left: 5%;
+}
+.MyAppoint ul li p{
+    line-height: 2;
+}
+#test5{
+    width: 45%;
+    height: 30px
 }

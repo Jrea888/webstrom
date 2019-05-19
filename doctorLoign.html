@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网上预约挂号系统</title>
+</head>
+<link rel="stylesheet" href="./styles/common.css">
+<link rel="stylesheet" href="./styles/cssDoctor.css">
+<body>
+
+<div class="doctor" id="app">
+    <ul>
+        <li>
+            账号：<input id="dpInput" type="text" v-on:blur="checkDoctor" v-model="doctorLoginName">
+        </li>
+        <span>{{errorDoctorLoginUser}}</span>
+        <li>
+            密码：<input id="dpInput" type="password" v-on:blur="checkDoctorPass" v-model="doctorLoginWord">
+        </li>
+        <span>{{errorDoctorLoginPass}}</span>
+        <li>
+            <input class="DL dl" type="button" @click="DoctorLogin" value="登录">
+            <input class="DL" type="button" @click="Reset" value="重置">
+        </li>
+    </ul>
+</div>
+
+
+<script type="text/javascript" src="./script/vue.js"></script>
+<script type="text/javascript" src="./script/jquery.js"></script>
+<script type="text/javascript" src="./script/toolJs1.js"></script>
+<script type="text/javascript" src="./script/axios.min.js"></script>
+<script type="text/javascript" src="./script/constants.js"></script>
+<script type="text/javascript" src="./script/httpRequest.js"></script>
+<script type="text/javascript">
+
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                doctorLoginName: '',
+                doctorLoginWord: '',
+                errorDoctorLoginUser: '',
+                errorDoctorLoginPass: ''
+            };
+        },
+        methods: {
+            checkDoctor() {
+                if (this.doctorLoginName) {
+                    this.errorDoctorLoginUser = ""
+                } else {
+                    this.errorDoctorLoginUser = "账号不能为空";
+                }
+            },
+            checkDoctorPass() {
+                if (this.doctorLoginWord) {
+                    this.errorDoctorLoginPass = ""
+                } else {
+                    this.errorDoctorLoginPass = "密码不能为空";
+                }
+            },
+            doctorLogin(username, password) {
+                localStorage.removeItem("token");
+                var loginData = {
+                    username: username,
+                    password: password
+                };
+                $.ajax({
+                    type: "POST",
+                    url: getUrl() + "/sys/login",
+                    data: loginData,
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.code == 0) {
+                            localStorage.setItem("token", result.token);
+                            localStorage.setItem("doctorLoginName", loginData.username);
+                            parent.location.href = '/hospitalProject/doctorReservationInformation.html';
+                        }
+                        if (result.code == 500) {
+                            alert(result.msg)
+                        }
+                    },
+                    error: function () {
+                        alert("请求失败")
+                    }
+                });
+            },
+            DoctorLogin() {
+                var self = this;
+                if (this.doctorLoginName && this.doctorLoginWord) {
+                    var loginData = {
+                        username: this.doctorLoginName,
+                        password: this.doctorLoginWord,
+                    };
+                    $.ajax({
+                        type: "GET",
+                        url: getUrl() + "/out/api/isDoctor?userName=" + loginData.username,
+                        dataType: "json",
+                        success: function (result) {
+                            if (result.code == 0) {
+                                self.doctorLogin(loginData.username, loginData.password)
+                            }
+                            if (result.code == 500) {
+                                alert(result.msg)
+                            }
+                        },
+                        error: function () {
+                            alert("请求失败")
+                        }
+                    });
+                } else {
+                    alert("用户和密码不能为空")
+                }
+            },
+            Reset() {
+                this.doctorLoginName = "";
+                this.doctorLoginWord = ""
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

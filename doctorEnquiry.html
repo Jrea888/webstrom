@@ -6,16 +6,29 @@
 </head>
 <link rel="stylesheet" href="./styles/common.css">
 <link rel="stylesheet" href="./styles/index.css">
+<link rel="stylesheet" href="./styles/csslunbo.css">
 <body>
 <div class="top">
-    <img src="./images/topimg.jpg" alt="">
+    <div class="slideshow">
+        <div class="swiper-container" style="width: 100%;height: 350px;">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="./images/2.jpeg" height="350" width="1600"/>
+                </div>
+                <div class="swiper-slide"><img src="./images/3.jpeg" height="350" width="1600" />
+                </div>
+                <div class="swiper-slide"><img src="./images/4.jpeg" height="350" width="1600" />
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
 </div>
 <div class="heng"></div>
 <div class="nav">
     <ul>
-        <li><a href="./index.html">系统首页</a></li>
+        <li><a href="./index.html">首页</a></li>
         <li><a href="./doctorEnquiry.html">医生查询</a></li>
-        <li><a href="./online.html">在线预约</a></li>
+        <li><a href="./onLine.html">在线预约</a></li>
         <li><a href="publicInfo.html">公告信息</a></li>
         <li><a href="./registered.html">患者注册</a></li>
     </ul>
@@ -27,43 +40,42 @@
             <div class="list">
                 <div class="listTop">
                     <div class="text">
+                        <img src="./images/yisheng.jpg" alt="">
                         <span>医生信息</span>
                     </div>
                     <div class="enquiry">
-                        <input class="doctor" type="text" v-model="doctorID" placeholder="请输入医院ID"/>
-                        <input class="doctor" type="text" v-model="doctorName" placeholder="请输入医生姓名"/>
-                        <input class="btn1" type="button" @click="doctorSearch" value="搜索">
-                        <input class="btn1" type="button" @click="doctorCancel" value="取消">
+                        <div class="layui-input-inline">
+                            选择医院:&nbsp;&nbsp;
+                            <select name="doctorId" lay-verify="" id="doctorData" defaultValue="0"></select>
+                            <input class="doctor" type="text" v-model="doctorName" placeholder="请输入医生姓名"/>
+                            <input class="btn1" type="button" @click="doctorSearch" value="搜索">
+                            <input class="btn1" type="button" @click="doctorCancel" value="重置">
+                        </div>
                     </div>
                 </div>
+
                 <div class="hostinfor clearfix">
                     <table class="rightPartContent" width="100%" cellpadding="0" cellspacing="0" border="0"
                            align="center">
                         <thead>
                         <tr>
-                            <td class="bond">医院ID</td>
+                            <td class="bond">医院名称</td>
                             <td class="bond">医生姓名</td>
-                            <td class="bond">所属医院</td>
+                            <td class="bond">擅长</td>
+                            <td class="bond">科室名称</td>
                         </tr>
                         </thead>
 
                         <tbody>
-                            <tr v-for="(item,index) in doctorList" :key="index">
-                                <td>{{item.id}}</td>
-                                <td>
-                                    <a href="">{{item.xingming}}</a>
-                                </td>
-                                <td>{{item.shanchang}}</td>
-                            </tr>
+                        <tr v-for="(item,index) in doctorList" :key="index">
+                            <td>{{item.yiyuanname}}</td>
+                            <td>{{item.xingming}}</td>
+                            <td>{{item.shanchang}}</td>
+                            <td>{{item.keshiname}}</td>
+                        </tr>
                         </tbody>
 
                     </table>
-                </div>
-                <div class="doctLang">
-                    <span>医生留言</span>
-                    <div class="liuYan">
-                        <p>{{leaveMessage}}</p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -72,11 +84,13 @@
             <div class="login" id="loginInput">
                 <ul>
                     <li>
-                        账号：<input class="zhHao" v-on:blur="checkUser" v-model="userLoginName"  type="text" placeholder="请输入用户名">
+                        账号：<input class="zhHao" v-on:blur="checkUser" v-model="userLoginName" type="text"
+                                  placeholder="请输入用户名">
                     </li>
                     <p>{{errorLoginUser}}</p>
                     <li>
-                        密码：<input class="zhHao" v-on:blur="checkPass" v-model="passLoginWord" type="password" placeholder="请输入密码">
+                        密码：<input class="zhHao" v-on:blur="checkPass" v-model="passLoginWord" type="password"
+                                  placeholder="请输入密码">
                     </li>
                     <p>{{errorLoginPass}}</p>
                     <li>
@@ -89,86 +103,97 @@
                 <ul>
                     <li>
                         <span>欢迎您：</span>
-                        <span id="realUser">admin</span>
+                        <span id="realUser"></span>
                     </li>
                     <li>
-                        <a href="">注销退出</a>
-                    </li>
-                    <li>
-                        <a href="">管理中心</a>
+                        <button @click="cancelExit" value="注销退出">注销退出</button>
                     </li>
                 </ul>
+            </div>
+            <div class="myOn" id="myOnLine">
+                <a href="myAppointment.html">
+                    <img src="./images/123.png" alt="">
+                </a>
+                <div>
+                    <p>我的预约</p>
+                </div>
             </div>
         </div>
     </div>
     <div class="font">
-        <p>联系方式&nbsp;电话：18142422763&nbsp;&nbsp;&nbsp;</p>
-        <p>地址：陕西省咸阳市XXXXXX厦A区305号</p>
+        <p>联系方式&nbsp;电话：18292926771</p>
+        <p>版权所有&copy;陕西国际商贸学院</p>
+        <p>地址：陕西省咸阳市统一路世纪大道</p>
     </div>
 </div>
 
 <script type="text/javascript" src="./script/vue.js"></script>
 <script type="text/javascript" src="./script/jquery.js"></script>
-<script type="text/javascript" src="script/toolJs.js"></script>
-<script type="text/javascript" src="script/axios.min.js"></script>
-<script type="text/javascript" src="script/constants.js"></script>
-<script type="text/javascript" src="script/httpRequest.js"></script>
+<script type="text/javascript" src="./script/toolJs.js"></script>
+<script type="text/javascript" src="./script/axios.min.js"></script>
+<script type="text/javascript" src="./script/constants.js"></script>
+<script type="text/javascript" src="./script/httpRequest.js"></script>
+<script type="text/javascript" src="./script/lunBo1.js"></script>
+
 <script type="text/javascript">
-    //登录成功 显示真实用户
     $(function () {
-        show()
+        document.getElementById("realUser").innerHTML = show();
+
+        var defaultValue = $("#doctorData").val();
+        $.ajax({
+            type: "get",
+            url: getUrl() + "/out/api/hospitalList",
+            dataType: "json",
+            data: {},
+            async: "false",
+            success: function (result) {
+                var b = 0
+                var a = result.dataList;
+                $("#doctorData").append("<option value=" + b + " selected>" + "请选择");
+                for (var i = 0; i < a.length; i++) {
+                    $("#doctorData").append("<option value=" + a[i].id + ">" + a[i].mingcheng);
+                }
+            }
+        });
     });
-    document.getElementById("realUser").innerHTML = show();
+
 
     new Vue({
         el: '#enquiry',
         data() {
             return {
-                //用户登录信息
+                doctorName: '',
+                doctorList: [],
                 userLoginName: '',
                 passLoginWord: '',
-                errorLoginUser:'',
-                errorLoginPass:'',
-                leaveMessage:'',
-                //医生姓名
-                doctorName: '',
-                doctorID: '',
-                doctorList:[]
+                errorLoginUser: '',
+                errorLoginPass: '',
             }
         },
         methods: {
-            //获取医生信息
             async getDoctorData() {
-                let {data:result} = await http.get({
-                    url: getUrl() + '/out/api/doctorList'
+                let {data: result} = await http.get({
+                    url: getUrl() + '/out/api/doctorList',
                 });
-                console.log(result,"------result");
                 this.doctorList = result.dataList;
-                console.log(this.doctorList,"------doctorList");
-                console.log("-----------------------------------------------------------------");
-
-                let {data:leaveMsg} = await http.get({
-                    url: getUrl() + '/out/api/myMessage'
-                });
-                console.log(leaveMsg,"----------leaveMsg")
-
             },
-            //医生信息查询
             doctorSearch() {
-                if (this.doctorName && this.doctorID) {
+                    var that = this;
+                    var id = $("#doctorData").val();
                     var enquiryData = {
-                        hospitalId: this.doctorID,
+                        hospitalId: id,
                         doctorName: this.doctorName
                     };
                     $.ajax({
-                        type: "POST",
-                        url: getUrl() + "/out/api/doctorInfo",
+                        type: "GET",
+                        url: getUrl() + "/out/api/doctorList",
                         data: enquiryData,
                         dataType: "json",
                         success: function (result) {
+                            console.log(result);
                             if (result.code == 0) {
-                                console.log(result,"----result")
-                                //查询到 储存到localStroge，跳转到医生信息有显示
+                                console.log(result);
+                                that.doctorList = result.dataList
                             }
                             if (result.code == 500) {
                                 alert(result.msg)
@@ -178,35 +203,30 @@
                             alert("请求失败")
                         }
                     });
-                } else {
-                    alert("请输入医生姓名和所属医院！")
-                }
             },
-            //输入重置
             doctorCancel() {
                 this.doctorName = "";
-                this.doctorID = "";
             },
-            //用户登录校验
-            checkUser(){
-                if (this.userLoginName){
+            checkUser() {
+                if (this.userLoginName) {
                     this.errorLoginUser = ""
-                }else{
-                    this.errorLoginUser= "账号不能为空";
+                } else {
+                    this.errorLoginUser = "账号不能为空";
                 }
             },
-            checkPass(){
-                if (this.passLoginWord && this.passLoginWord.length === 6){
+            checkPass() {
+                if (this.passLoginWord) {
                     this.errorLoginPass = ""
-                }else{
-                    this.errorLoginPass= "密码不能为空 长度必须为六位";
+                } else {
+                    this.errorLoginPass = "密码不能为空";
                 }
             },
-            //用户登录部分
             checkLogin() {
+                localStorage.removeItem("token");
                 if (this.userLoginName && this.passLoginWord) {
+                    localStorage.setItem("userLoginName", this.userLoginName);
                     var loginData = {
-                        userName: this.userLoginName,
+                        username: this.userLoginName,
                         password: this.passLoginWord
                     };
                     $.ajax({
@@ -215,10 +235,10 @@
                         data: loginData,
                         dataType: "json",
                         success: function (result) {
-                            if (result.code == 0) {//登录成功
+                            if (result.code == 0) {
                                 localStorage.setItem("token", result.token);
-                                localStorage.setItem("userLoginName", this.userLoginName);
-                                parent.location.href = '/hospital/index.html';
+                                document.getElementById("realUser").innerHTML = show();
+                                parent.location.href = '/hospitalProject/index.html';
                             }
                             if (result.code == 500) {
                                 alert(result.msg)
@@ -232,16 +252,30 @@
                     alert("用户和密码不能为空")
                 }
             },
-            //注册
             Register() {
-                parent.location.href = '/hospital/registered.html';
+                parent.location.href = '/hospitalProject/registered.html';
             },
+            //注d销退出
+            cancelExit() {
+                localStorage.removeItem("token");
+                localStorage.removeItem("userLoginName");
+                parent.location.href = '/hospitalProject/index.html';
+            }
         },
-        mounted(){
+        mounted() {
             this.getDoctorData();
         }
     })
 </script>
-
+<script type="text/javascript">
+    var mySwiper = new Swiper('.swiper-container', {
+        effect: 'fade',
+        autoplay: true,
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+        },
+    })
+</script>
 </body>
 </html>

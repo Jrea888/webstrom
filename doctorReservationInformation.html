@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网上预约挂号系统</title>
+</head>
+<link rel="stylesheet" href="./styles/common.css">
+<link rel="stylesheet" href="./styles/index.css">
+<link rel="stylesheet" href="./styles/cssDoctor.css">
+<link rel="stylesheet" href="./styles/csslunbo.css">
+<body>
+<div id="app">
+    <div class="top">
+        <div class="slideshow">
+            <div class="swiper-container" style="width: 100%;height: 350px;">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="./images/2.jpeg" height="350" width="1600"/>
+                    </div>
+                    <div class="swiper-slide"><img src="./images/3.jpeg" height="350" width="1600" />
+                    </div>
+                    <div class="swiper-slide"><img src="./images/4.jpeg" height="350" width="1600" />
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+    <div class="heng"></div>
+    <div class="nav">
+        <ul>
+            <li><a href="doctorReservationInformation.html">我的挂号</a></li>
+            <li><a href="doctorAdmin.html">病例管理</a></li>
+            <li><a href="doctorWords.html">医生留言</a></li>
+        </ul>
+        <div class="DR fr">
+            <div id="username">
+                <ul>
+                    <li>
+                        <span>欢迎您：</span>
+                        <span id="realDoctor"></span>
+                        <button @click="cancelExit">注销退出</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content clearfix">
+        <div class="LED fl">
+            <div class="list">
+                <div class="listTop">
+                    <div class="text">
+                        <img src="./images/megua.jpg" alt="">
+                        <span>我的挂号</span>
+                        <input type="text" id="inp" placeholder="请输入留言内容">
+                        <div class="information">
+                            患者姓名:&nbsp;&nbsp;
+                            <select name="doctorId" lay-verify="" id="patient" defaultValue="0"></select>
+                            <input type="button" @click="doctorGreen" value="同意">
+                            <input type="button" @click="doctorRefuse" value="拒绝">
+                        </div>
+                    </div>
+                </div>
+                <div class="listBottom Add doctorAppoint clearfix">
+                    <ul>
+                        <li>
+                            <div class="bond2">序号(Id)</div>
+                            <div class="bond2">患者姓名</div>
+                            <div class="bond2">疾病</div>
+                            <div class="bond2">专家姓名</div>
+                            <div class="bond2">预约日期</div>
+                        </li>
+                        <li v-for="(item,index) in dataList" :key="index">
+                            <span>{{item.id}}</span>
+                            <span>{{item.xingming}}</span>
+                            <span>{{item.jibing}}</span>
+                            <span>{{item.zhuanjianeme}}</span>
+                            <span>{{item.riqi}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="font">
+        <p>联系方式&nbsp;电话：18292926771</p>
+        <p>版权所有&copy;陕西国际商贸学院</p>
+        <p>地址：陕西省咸阳市统一路厦A区305号</p>
+    </div>
+</div>
+<div id="loginInput"></div>
+
+<script type="text/javascript" src="./script/vue.js"></script>
+<script type="text/javascript" src="./script/jquery.js"></script>
+<script type="text/javascript" src="./script/toolJs.js"></script>
+<script type="text/javascript" src="./script/axios.min.js"></script>
+<script type="text/javascript" src="./script/constants.js"></script>
+<script type="text/javascript" src="./script/httpRequest.js"></script>
+<script type="text/javascript" src="./script/lunBo1.js"></script>
+<script type="text/javascript" src="./layer/layer.js"></script>
+<script type="text/javascript">
+    $(function () {
+        document.getElementById("realDoctor").innerHTML = doctorShow();
+        var defaultValue = $("#patient").val();
+        var tok = localStorage.getItem("token");
+        $.ajax({
+            type: "get",
+            url: getUrl() + "/out/api/myRegistered",
+            dataType: "json",
+            data: {
+                tokenNo: tok
+            },
+            async: "false",
+            success: function (result) {
+                if (result.code == 0) {
+                    console.log(result);
+                    var b = 0;
+                    var a = result.dataList;
+                    $("#patient").append("<option value=" + b + " selected>" + "请选择");
+                    for (var i = 0; i < a.length; i++) {
+                        $("#patient").append("<option value=" + a[i].id + ">" + a[i].xingming);
+                    }
+                }
+                if (result.code == 500) {
+                    alert(result.msg);
+                }
+            }
+        });
+    });
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                dataList: [],
+            };
+        },
+        methods: {
+            getData() {
+                var self = this;
+                var tok = localStorage.getItem("token");
+                $.ajax({
+                    type: "GET",
+                    url: getUrl() + "/out/api/myRegistered",
+                    data: {
+                        tokenNo: tok
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.code == 0) {
+                            self.dataList = result.dataList
+                        }
+                        if (result.code == 500) {
+                            alert(result.msg)
+                        }
+                    },
+                    error: function () {
+                        alert("请求失败")
+                    }
+                });
+            },
+            doctorGreen() {
+                var a = $("#patient").val();
+                var b = $("#inp").val();
+                if (a == 0 && (b == "" || b == null)) {
+                    alert("留言内容与患者姓名不为空")
+                } else {
+                    var token = localStorage.getItem("token");
+                    var jiuId = $("#patient").val();
+                    $.ajax({
+                        type: "POST",
+                        url: getUrl() + "/out/api/suCase",
+                        dataType: "json",
+                        data: {
+                            tokenNo: token,
+                            jiuzhenhao: jiuId,
+                            neirong: b
+                        },
+                        async: "false",
+                        success: function (result) {
+                            if (result.code == 0) {
+                                console.log(result);
+                                alert(result.msg);
+                                location.reload()
+                            }
+                            if (result.code == 500) {
+                                alert(result.msg);
+                            }
+                        }
+                    });
+                }
+            },
+            doctorRefuse() {
+                var a = $("#patient").val();
+                var b = $("#inp").val();
+                if (a == 0 && (b == "" || b == null)) {
+                    alert("留言内容与患者姓名不为空")
+                } else {
+                    var token = localStorage.getItem("token");
+                    var jiuId = $("#patient").val();
+                    $.ajax({
+                        type: "POST",
+                        url: getUrl() + "/out/api/falCase",
+                        dataType: "json",
+                        data: {
+                            tokenNo: token,
+                            jiuzhenhao: jiuId,
+                            neirong: b
+                        },
+                        async: "false",
+                        success: function (result) {
+                            if (result.code == 0) {
+                                console.log(result);
+                                alert(result.msg);
+                                location.reload()
+                            }
+                            if (result.code == 500) {
+                                alert(result.msg);
+                            }
+                        }
+                    });
+                }
+            },
+            cancelExit() {
+                localStorage.removeItem("token");
+                localStorage.removeItem("doctorLoginName");
+                parent.location.pathname = "/hospitalProject/doctorLoign.html"
+            }
+        },
+        mounted() {
+            this.getData();
+        }
+    });
+</script>
+<script type="text/javascript">
+    var mySwiper = new Swiper('.swiper-container', {
+        effect: 'fade',
+        autoplay: true,
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+        },
+    })
+</script>
+</body>
+</html>
